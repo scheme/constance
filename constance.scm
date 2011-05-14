@@ -1,16 +1,12 @@
 (define-syntax define-constance
   (lambda (e rename c)
-    (define (get-value-pairs-from-c name x y) y)
     (let* ((alist-name (cadr e))
            (c-headers  (caddr e))
            (pairs      (cdddr e))
-           (alist      (map (lambda (pair)
-                              (cons (car pair) (cadr pair)))
-                            pairs))
-           (results    (get-value-pairs-from-c alist-name c-headers alist)))
+           (results    (get-value-pairs-from-c alist-name c-headers pairs)))
       `(,(rename 'begin)
         ,@(map (lambda (pair)
-                 `(,(rename 'define) ,(car pair) ,(cdr pair)))
+                 `(,(rename 'define) ,(first pair) ,(second pair)))
                results)))))
 
 ;; (define-constance IDENTIFIER [LISTOF SYMBOL] [ASSOC-LIST SYMBOL STRING])
