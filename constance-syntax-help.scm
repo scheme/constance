@@ -31,7 +31,7 @@ typedef struct {
   maybe_int second;
 } pair;
 
-void main() {
+int main() {
   pair values[] = {")))
 
 (define (c-print-array-as-sexp name length)
@@ -59,8 +59,8 @@ void main() {
   }
 
   fprintf(sexpr_file, \")\");
-
   fclose(sexpr_file);
+  return 0;
 }
 "))
 
