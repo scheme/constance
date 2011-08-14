@@ -4,8 +4,10 @@
                                  exec-file
                                  fork
                                  exec))
+        (subset posix-files (list-directory))
+        (subset os-strings (os-string->string))
         (subset formats (format))
-        (subset srfi-1 (fold-right first second)))
+        (subset srfi-1 (fold-right first second any)))
   (files constance-syntax-help))
 
 (define-structure constance (export (define-constance :syntax))

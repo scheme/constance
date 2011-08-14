@@ -91,13 +91,22 @@ int main() {
         (wait-for-child-process pid?)
         (if file? (apply exec-file args) (apply exec args)))))
 
-(define (get-value-pairs-from-c name includes pairs)
+(define (sexpr-exists? name)
+  (any (lambda (x) (string=? (os-string->string x) name))
+       (list-directory "./")))
+
+(define (generate-sexpr name includes pairs)  
   (call-with-output-file "generate-tty-consts.c"
     (lambda (out)
       (display (make-c-program name includes pairs) out)))
   (system #f "cc" "generate-tty-consts.c")
   (system #t "./a.out")
-  (system #f "rm" "a.out" "generate-tty-consts.c")
-  (call-with-input-file (string-append (symbol->string name) ".sexpr")
-    (lambda (in)
-      (read in))))
+  (system #f "rm" "a.out" "generate-tty-consts.c"))
+
+(define (get-value-pairs-from-c name includes pairs)
+  (let ((file-name (string-append (symbol->string name) ".sexpr")))
+    (if (not (sexpr-exists? file-name))
+        (generate-sexpr name includes pairs))
+    (call-with-input-file file-name
+      (lambda (in)
+        (read in)))))
