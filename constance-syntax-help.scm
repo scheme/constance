@@ -95,7 +95,7 @@ int main() {
   (any (lambda (x) (string=? (os-string->string x) name))
        (list-directory "./")))
 
-(define (generate-sexpr name includes pairs)  
+(define (generate-sexpr name includes pairs)
   (call-with-output-file "generate-tty-consts.c"
     (lambda (out)
       (display (make-c-program name includes pairs) out)))
