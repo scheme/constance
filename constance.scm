@@ -6,7 +6,8 @@
            (results    (get-value-pairs-from-c alist-name c-headers pairs)))
       `(,(rename 'begin)
         ,@(map (lambda (pair)
-                 `(,(rename 'define) ,(first pair) ,(second pair)))
+                 `(,(rename 'define) ,(string->symbol (first pair))
+                                     ,(second pair)))
                results)))))
 
 ;; (define-constance alist-name

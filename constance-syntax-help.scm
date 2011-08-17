@@ -48,12 +48,12 @@ int main() {
 
     if (maybe_value.somethingp) {
       fprintf(sexpr_file,
-              \"(%s %i)\\n\",
+              \"(\\\"%s\\\" %i)\\n\",
               scheme_name,
               maybe_value.value);
     } else {
       fprintf(sexpr_file,
-              \"(%s #f)\\n\",
+              \"(\\\"%s\\\" #f)\\n\",
               scheme_name);
     }
   }
